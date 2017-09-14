@@ -6,7 +6,7 @@ import { WhileType } from '../typecheck/WhileType';
 /**
   Representación de constantes numéricas o numerales.
 */
-export class Numeral implements Exp {
+export class Double implements Exp {
 
   value: number;
 
@@ -15,7 +15,7 @@ export class Numeral implements Exp {
   }
 
   toString(): string {
-    return `Numeral(${this.value})`;
+    return `Double(${this.value})`;
   }
 
   unparse(): string {

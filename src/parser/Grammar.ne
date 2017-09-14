@@ -18,12 +18,13 @@ import {
   Multiplication,
   Division,
   Negation,
-  Numeral,
   Sequence,
   Substraction,
   TruthValue,
   Variable,
-  WhileDo
+  WhileDo,
+  Integer,
+  Double
 } from '../ast/AST';
 
 import {
@@ -87,7 +88,8 @@ neg ->
 
 value ->
     "(" exp ")"             {% ([, exp, ]) => (exp) %}
-  | number                  {% ([num]) => (new Numeral(num)) %}
+  | integer                 {% ([num]) => (new Integer(num)) %}
+  | double                  {% ([num]) => (new Double(num)) %}
   | "true"                  {% () => (new TruthValue(true)) %}
   | "false"                 {% () => (new TruthValue(false)) %}
   | identifier              {% ([id]) => (new Variable(id)) %}
@@ -102,7 +104,9 @@ type ->
 identifier ->
     %identifier             {% ([id]) => (id.value) %}
 
-number ->
+integer ->
     %integer                {% ([id]) => (id.value) %}
   | %hex                    {% ([id]) => (id.value) %}
-  | %float                  {% ([id]) => (id.value) %}
+
+float ->
+    %float                  {% ([id]) => (id.value) %}

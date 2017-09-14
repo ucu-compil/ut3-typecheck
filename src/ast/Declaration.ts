@@ -14,7 +14,7 @@ export class Declaration implements Stmt {
   }
 
   toString(): string {
-    return `Assignment(${this.type} ${this.id})`;
+    return `Declaration(${this.type} ${this.id})`;
   }
 
   unparse(): string {
@@ -26,6 +26,7 @@ export class Declaration implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
-    return undefined;
+    checkstate.set(this.id,this.type);
+    return checkstate;
   }
 }
