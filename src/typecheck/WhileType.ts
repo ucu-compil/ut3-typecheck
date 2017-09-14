@@ -1,1 +1,3 @@
-export class WhileType { }
+export class WhileType {
+  constructor(){}
+}

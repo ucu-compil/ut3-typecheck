@@ -3,27 +3,22 @@ import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
 
-/**
-  Representación de las asignaciones de valores a variables.
-*/
-export class Assignment implements Stmt {
+export class Declaration implements Stmt {
 
   type: WhileType;
   id: string;
-  exp: Exp;
 
-  constructor(type: WhileType, id: string, exp: Exp) {
+  constructor(type: WhileType, id: string) {
     this.type = type;
     this.id = id;
-    this.exp = exp;
   }
 
   toString(): string {
-    return `Assignment(${this.type} ${this.id}, ${this.exp.toString()})`;
+    return `Assignment(${this.type} ${this.id})`;
   }
 
   unparse(): string {
-    return `${this.type} ${this.id} = ${this.exp.unparse()}`;
+    return `${this.type} ${this.id}}`;
   }
 
   evaluate(state: State): State {

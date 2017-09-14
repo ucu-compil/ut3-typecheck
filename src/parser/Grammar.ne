@@ -26,6 +26,12 @@ import {
   WhileDo
 } from '../ast/AST';
 
+import {
+  WhileInt,
+  WhileBool,
+  WhileDouble
+} from '../typecheck/TYPECHECK'
+
 import { tokens } from './Tokens';
 import { MyLexer } from './Lexer';
 
@@ -43,7 +49,7 @@ stmt ->
   | "if" exp "then" stmt                  {% ([, cond, , thenBody]) => (new IfThen(cond, thenBody)) %}
 
 stmtelse ->
-    identifier "=" exp ";"                {% ([id, , exp, ]) => (new Assignment(id, exp)) %}
+    type identifier "=" exp ";"           {% ([type, id, , exp, ]) => (new Assignment(type, id, exp)) %}
   | "{" stmt:* "}"                        {% ([, statements, ]) => (new Sequence(statements)) %}
   | "while" exp "do" stmt                 {% ([, cond, , body]) => (new WhileDo(cond, body)) %}
   | "if" exp "then" stmtelse "else" stmt  {% ([, cond, , thenBody, , elseBody]) => (new IfThenElse(cond, thenBody, elseBody)) %}
@@ -86,6 +92,10 @@ value ->
   | "false"                 {% () => (new TruthValue(false)) %}
   | identifier              {% ([id]) => (new Variable(id)) %}
 
+type ->
+    "int"                   {% () => (new WhileInt()) %}
+  | "double"                {% () => (new WhileDouble()) %}
+  | "bool"                  {% () => (new WhileBool()) %}
 
 # Atoms
 
