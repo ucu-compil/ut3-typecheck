@@ -10,7 +10,7 @@ export class Numeral implements Exp {
 
   value: WhileType;
 
-  constructor(value: number) {
+  constructor(value: WhileType) {
     this.value = value;
   }
 

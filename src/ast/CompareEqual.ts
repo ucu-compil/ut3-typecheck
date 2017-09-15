@@ -1,7 +1,7 @@
 import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
-import { WhileType } from '../typecheck/WhileType';
+import { WhileType,BooleanType,IntegertType} from '../typecheck/WhileType';
 
 /**
   Representación de las comparaciones por igual.
@@ -31,7 +31,7 @@ export class CompareEqual implements Exp {
   checktype(checkstate: CheckState): WhileType {
     var lhs = this.lhs.checktype(checkstate);
     var rhs = this.checktype(checkstate);
-    if(!this.isCompatible(lhs) && this.isCompatible(lhs))reportError()
+    if(!this.isCompatible(lhs) && this.isCompatible(lhs))this.reportError(checkstate,lhs,rhs);
     return BooleanType.getInstance();
 
   }
