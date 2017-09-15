@@ -42,6 +42,14 @@ export class Substraction implements Exp {
       if(lhs instanceof WhileInt){ return new WhileInt(); }
       if(lhs instanceof WhileDouble){ return new WhileDouble(); }
     }
+    if(lhs instanceof WhileDouble){
+      if(rhs instanceof WhileDouble) { return new WhileDouble();}
+      if(rhs instanceof WhileInt) { return new WhileDouble(); }
+    }
+    if(rhs instanceof WhileDouble){
+      if(lhs instanceof WhileDouble) { return new WhileDouble();}
+      if(lhs instanceof WhileInt) { return new WhileDouble(); }
+    }
     return undefined;
   }
 }

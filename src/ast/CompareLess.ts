@@ -43,6 +43,14 @@ export class CompareLess implements Exp {
       if(lhs instanceof WhileDouble) { return new WhileBool();}
       if(lhs instanceof WhileInt) { return new WhileBool(); }
     }
+    if(lhs instanceof WhileDouble){
+      if(rhs instanceof WhileDouble) { return new WhileBool();}
+      if(rhs instanceof WhileInt) { return new WhileBool(); }
+    }
+    if(rhs instanceof WhileDouble){
+      if(lhs instanceof WhileDouble) { return new WhileBool();}
+      if(lhs instanceof WhileInt) { return new WhileBool(); }
+    }
     return undefined;
   }
 }
