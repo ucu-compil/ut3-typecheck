@@ -3,9 +3,10 @@ import { WhileType } from './WhileType';
 export class CheckState {
 
   vars: Map<string, WhileType>;
-  errors:[String];
-  
+  errors:String[];
+
   constructor() {
+    this.errors = [];
     this.vars = new Map<string, WhileType>();
   }
 

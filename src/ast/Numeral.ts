@@ -29,7 +29,11 @@ export class Numeral implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return this.isInteger() ? IntegerType.getInstance(): NumericalType.getInstance();
+    if(this.isInteger()){
+      return IntegerType.getInstance();
+    }else{
+      NumericalType.getInstance();
+    }
   }
   isInteger(){
      return this.value % 1 == 0;
