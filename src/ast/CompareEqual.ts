@@ -32,8 +32,8 @@ export class CompareEqual implements Exp {
 
   checktype(checkstate: CheckState): WhileType {
     var lhs = this.lhs.checktype(checkstate);
-    var rhs = this.checktype(checkstate);
-    if(!this.isCompatible(lhs) && this.isCompatible(lhs)){
+    var rhs = this.rhs.checktype(checkstate);
+    if(!this.isCompatible(lhs) || !this.isCompatible(rhs)){
       this.reportError(checkstate,lhs,rhs);
     }
     return BooleanType.getInstance();
