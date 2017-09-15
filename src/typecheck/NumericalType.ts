@@ -19,4 +19,8 @@ export class NumericalType extends WhileType {
         return this.isNumerical(targetType);
     }
 
+    protected isNumerical(type:WhileType):boolean{
+        return type instanceof NumericalType;
+    }
+
 }

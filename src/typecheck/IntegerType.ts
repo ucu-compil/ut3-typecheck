@@ -1,4 +1,5 @@
 import { WhileType } from "./WhileType";
+import { NumericalType } from "./NumericalType";
 
 export class IntegerType extends WhileType {
 
@@ -18,4 +19,14 @@ export class IntegerType extends WhileType {
     public coerce(targetType: WhileType): boolean {
         return this.isInteger(targetType) || this.isNumerical(targetType);
     }
+
+
+    protected isNumerical(type:WhileType):boolean{
+        return type instanceof NumericalType;
+    }
+
+    protected isInteger(type:WhileType):boolean{
+        return type instanceof IntegerType;
+    }
+
 }
