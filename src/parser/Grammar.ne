@@ -27,9 +27,9 @@ import {
   DeclarationAssignment,
   WhileDo
 } from '../ast/AST';
-import { BooleanType } from './typecheck/BooleanType';
-import { IntegerType } from './typecheck/IntegerType';
-import { FloatType } from './typecheck/FloatType';
+import { BooleanType } from '../typecheck/BooleanType';
+import { IntegerType } from '../typecheck/IntegerType';
+import { NumericalType } from '../typecheck/NumericalType';
 
 import { tokens } from './Tokens';
 import { MyLexer } from './Lexer';
@@ -106,6 +106,6 @@ number ->
   | %floatvalue             {% ([id]) => (id.value) %}
 
 type ->
-    "boolean"                 {% ([id]) => (new BooleanType()) %}
-  | "int"                     {% ([id]) => (new IntegerType()) %}
-  | "float"                   {% ([id]) => (new FloatType())   %}
+    "boolean"                 {% ([id]) => (BooleanType.getInstance()) %}
+  | "int"                     {% ([id]) => (IntegerType.getInstance()) %}
+  | "float"                   {% ([id]) => (NumericalType.getInstance())   %}

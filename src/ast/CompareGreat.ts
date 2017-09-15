@@ -43,6 +43,6 @@ export class CompareGreat implements Exp {
     return type.coerce(int);
   }
   reportError(chkState: CheckState,type1:WhileType,type2:WhileType){
-    chkState.errors.append("Error al hacer "type1 +" " + ">"+ type2)
+    chkState.errors.push("Error al hacer "+type1.toString() +" " + ">"+ type2.toString())
   }
 }

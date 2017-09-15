@@ -2,15 +2,17 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { IntegerType } from '../typecheck/IntegerType';
+import { NumericalType } from '../typecheck/NumericalType';
 
 /**
   Representación de constantes numéricas o numerales.
 */
 export class Numeral implements Exp {
 
-  value: WhileType;
+  value: number;
 
-  constructor(value: WhileType) {
+  constructor(value: number) {
     this.value = value;
   }
 
@@ -27,6 +29,9 @@ export class Numeral implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return this.value;
+    return this.isInteger() ? IntegerType.getInstance(): NumericalType.getInstance();
+  }
+  isInteger(){
+     return this.value % 1 == 0;
   }
 }
