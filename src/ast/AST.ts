@@ -3,6 +3,8 @@ export * from './ASTNode';
 
 // Statements
 export * from './Assignment';
+export * from './DeclarationAssignment';
+export * from './Declaration';
 export * from './IfThenElse';
 export * from './IfThen';
 export * from './Sequence';

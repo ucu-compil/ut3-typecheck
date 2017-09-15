@@ -23,11 +23,17 @@ import {
   Substraction,
   TruthValue,
   Variable,
+  Declaration,
+  DeclarationAssignment,
   WhileDo
 } from '../ast/AST';
+import { BooleanType } from './typecheck/BooleanType';
+import { IntegerType } from './typecheck/IntegerType';
+import { FloatType } from './typecheck/FloatType';
 
 import { tokens } from './Tokens';
 import { MyLexer } from './Lexer';
+
 
 const lexer = new MyLexer(tokens);
 
@@ -43,7 +49,9 @@ stmt ->
   | "if" exp "then" stmt                  {% ([, cond, , thenBody]) => (new IfThen(cond, thenBody)) %}
 
 stmtelse ->
-    identifier "=" exp ";"                {% ([id, , exp, ]) => (new Assignment(id, exp)) %}
+  identifier "=" exp ";"                  {% ([id, , exp, ]) => (new Assignment(id, exp)) %}
+  | type identifier "=" exp ";"           {% ([type, id, , exp, ]) => (new DeclarationAssignment(type, id, exp)) %}
+  | type identifier ";"                   {% ([type, id, ]) => (new Declaration(type, id)) %}
   | "{" stmt:* "}"                        {% ([, statements, ]) => (new Sequence(statements)) %}
   | "while" exp "do" stmt                 {% ([, cond, , body]) => (new WhileDo(cond, body)) %}
   | "if" exp "then" stmtelse "else" stmt  {% ([, cond, , thenBody, , elseBody]) => (new IfThenElse(cond, thenBody, elseBody)) %}
@@ -95,4 +103,9 @@ identifier ->
 number ->
     %integer                {% ([id]) => (id.value) %}
   | %hex                    {% ([id]) => (id.value) %}
-  | %float                  {% ([id]) => (id.value) %}
+  | %floatvalue             {% ([id]) => (id.value) %}
+
+type ->
+    "boolean"                 {% ([id]) => (new BooleanType()) %}
+  | "int"                     {% ([id]) => (new IntegerType()) %}
+  | "float"                   {% ([id]) => (new FloatType())   %}

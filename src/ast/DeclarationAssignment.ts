@@ -6,40 +6,40 @@ import { WhileType } from '../typecheck/WhileType';
 /**
   Representación de las asignaciones de valores a variables.
 */
-export class Assignment implements Stmt {
+export class DeclarationAssignment implements Stmt {
 
   id: string;
   exp: Exp;
+  type:WhileType;
 
-  constructor(id: string, exp: Exp) {
+  constructor(type:WhileType, id: string, exp: Exp) {
     this.id = id;
     this.exp = exp;
+    this.type = type;
   }
 
   toString(): string {
-    return `Assignment(${this.id}, ${this.exp.toString()})`;
+    return `DeclarationAssignment(${this.id}, ${this.exp.toString()})`;
   }
 
   unparse(): string {
-    return `${this.id} = ${this.exp.unparse()}`;
+    return `${this.type.toString()} ${this.id} = ${this.exp.unparse()}`;
   }
 
   evaluate(state: State): State {
     return undefined;
   }
-
   checktype(checkstate: CheckState): CheckState {
-    if (! this.isDefined(checkstate)){
-      checkstate.errors.push("Falta definir variable " + this.id);
+    var expType = this.exp.checktype(checkstate);
+    checkstate.vars.set(this.id, this.type);
+    if (this.isDefined(checkstate)){
+      checkstate.errors.push("La variable " + this.id + "ya está definida.");
     }
-    else{
-      var type = checkstate.vars.get(this.id);
-      if (! type.isSameType(this.exp.checktype(checkstate)))
-        checkstate.errors.push("Error de tipos: [" + type + "] distinto [" + this.exp.checktype(checkstate) + "]" );
-      }
+    if (! expType.isSameType(this.type)){
+      checkstate.errors.push("Error de tipos: [" + this.type + "] distinto [" + expType.toString() + "]" );
+    }
     return checkstate;
   }
-
   isDefined(checkstate: CheckState): Boolean {
     if (checkstate.vars.get(this.id) != undefined)
       return false;

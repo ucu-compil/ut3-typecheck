@@ -8,7 +8,7 @@ export abstract class WhileType {
     public toString():string{
         return `${this.constructor.name}`;
     }
-    
+
     protected isNumerical(type:WhileType):boolean{
         return type instanceof NumericalType;
     }
@@ -21,7 +21,7 @@ export abstract class WhileType {
         return type instanceof BooleanType;
     }
 
-    protected isSameType(type:WhileType):boolean{
+    public isSameType(type:WhileType):boolean{
        return type === this;
     }
 
