@@ -8,9 +8,9 @@ import { WhileType } from '../typecheck/WhileType';
 */
 export class TruthValue implements Exp {
 
-  value: boolean;
+  value: WhileType;
 
-  constructor(value: boolean) {
+  constructor(value: WhileType) {
     this.value = value;
   }
 
@@ -27,6 +27,6 @@ export class TruthValue implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return undefined;
+    return this.value;
   }
 }

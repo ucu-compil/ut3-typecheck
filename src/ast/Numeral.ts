@@ -8,7 +8,7 @@ import { WhileType } from '../typecheck/WhileType';
 */
 export class Numeral implements Exp {
 
-  value: number;
+  value: WhileType;
 
   constructor(value: number) {
     this.value = value;
@@ -27,6 +27,6 @@ export class Numeral implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return undefined;
+    return this.value;
   }
 }
