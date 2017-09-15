@@ -2,7 +2,7 @@ import { Exp, Stmt } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
-
+import {BooleanType } from '../typecheck/BooleanType';
 /**
   Representación de las iteraciones while-do.
 */
@@ -28,6 +28,9 @@ export class WhileDo implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
-    return undefined;
+    if (!this.cond.checktype(checkstate).coerce(BooleanType.getInstance())){
+      checkstate.errors.push("Error de tipos en la condicion del while, es tipo "+this.cond.checktype(checkstate).toString());
+    }
+    return checkstate;
   }
 }

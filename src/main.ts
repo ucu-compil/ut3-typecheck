@@ -38,6 +38,10 @@ while (true) {
         const node = nodes[0];
         state = node.checktype(state);
         console.log(`\n${state.toString()}`);
+        for(var i =0;i<state.errors.length;i++){
+          console.log(state.errors[i]);
+        }
+        state.errors = [];
         break;
       }
       default: {

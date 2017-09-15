@@ -28,9 +28,10 @@ export class Declaration implements Stmt {
     return undefined;
   }
   checktype(checkstate: CheckState): CheckState {
-    checkstate.vars.set(this.id, this.type);
-    if (this.isDefined(checkstate)){
+    if (!this.isDefined(checkstate)){
       checkstate.errors.push("La variable " + this.id + "ya está definida.");
+    }else{
+      checkstate.vars.set(this.id, this.type);
     }
     return checkstate;
   }

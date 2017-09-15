@@ -26,6 +26,12 @@ export class Variable implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return undefined;
+    var type = checkstate.get(this.id);
+    if(type != undefined){
+      return type;
+    }else{
+      checkstate.errors.push("Variable no declarada");
+      return undefined //Idk que deberia devolver sino esta declarada
+    }
   }
 }

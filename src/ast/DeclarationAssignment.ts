@@ -31,9 +31,10 @@ export class DeclarationAssignment implements Stmt {
   }
   checktype(checkstate: CheckState): CheckState {
     var expType = this.exp.checktype(checkstate);
-    checkstate.vars.set(this.id, this.type);
-    if (this.isDefined(checkstate)){
+    if (!this.isDefined(checkstate)){
       checkstate.errors.push("La variable " + this.id + "ya está definida.");
+    }else{
+      checkstate.vars.set(this.id, this.type);
     }
     if (! expType.isSameType(this.type)){
       checkstate.errors.push("Error de tipos: [" + this.type + "] distinto [" + expType.toString() + "]" );

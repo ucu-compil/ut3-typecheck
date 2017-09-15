@@ -16,9 +16,9 @@ export class Numeral implements Exp {
     this.value = value;
   }
 
-  toString(): string {
-    return `Numeral(${this.value})`;
-  }
+//  toString(): string {
+  //  return `Numeral(${this.value})`;
+  //}
 
   unparse(): string {
     return `${this.value}`;
@@ -32,10 +32,10 @@ export class Numeral implements Exp {
     if(this.isInteger()){
       return IntegerType.getInstance();
     }else{
-      NumericalType.getInstance();
+      return NumericalType.getInstance();
     }
   }
-  isInteger(){
+  isInteger(): boolean{
      return this.value % 1 == 0;
   }
 }

@@ -2,6 +2,7 @@ import { Exp, Stmt } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import {BooleanType } from '../typecheck/BooleanType';
 
 /**
   Representación de las sentencias condicionales.
@@ -28,6 +29,12 @@ export class IfThen implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
-    return undefined;
+    if (!this.cond.checktype(checkstate).coerce(BooleanType.getInstance())){
+      checkstate.errors.push("Error de tipos en la condicion del if, tipo "+this.cond.checktype(checkstate).toString());
+    }
+    var nState = checkstate.clone();
+    this.thenBody.checktype(nState);
+    checkstate.errors.concat(nState.errors);
+    return checkstate;
   }
 }

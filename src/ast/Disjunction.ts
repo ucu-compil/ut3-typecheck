@@ -44,6 +44,6 @@ export class Disjunction implements Exp {
     return type.coerce(bool);
   }
   reportError(chkState: CheckState,type1:WhileType,type2:WhileType){
-    chkState.errors.push("Error al hacer "+type1.toString() +" " + "||"+ type2.toString());
+    chkState.errors.push("Error al hacer "+type1.toString() +" " + "|| "+ type2.toString());
   }
 }

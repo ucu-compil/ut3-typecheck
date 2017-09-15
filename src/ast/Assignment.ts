@@ -1,4 +1,5 @@
 import { Exp, Stmt } from './ASTNode';
+import { Numeral } from './AST';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
@@ -29,20 +30,22 @@ export class Assignment implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
-    if (! this.isDefined(checkstate)){
+    if (!this.isDefined(checkstate)){
       checkstate.errors.push("Falta definir variable " + this.id);
     }
     else{
       var type = checkstate.vars.get(this.id);
-      if (! type.isSameType(this.exp.checktype(checkstate)))
-        checkstate.errors.push("Error de tipos: [" + type + "] distinto [" + this.exp.checktype(checkstate) + "]" );
+      var expType =this.exp.checktype(checkstate);
+      if (! type.isSameType(expType))
+        checkstate.errors.push("Error de tipos: [" + type + "] distinto [" + expType + "]" );
       }
     return checkstate;
   }
 
   isDefined(checkstate: CheckState): Boolean {
-    if (checkstate.vars.get(this.id) != undefined)
+    if (checkstate.vars.get(this.id) == undefined){
       return false;
+    }
     return true;
   }
 }
