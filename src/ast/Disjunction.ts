@@ -2,6 +2,7 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { WhileBool } from '../typecheck/TYPECHECK';
 
 /**
   Representación de conjunciones booleanas (AND).
@@ -29,6 +30,14 @@ export class Disjunction implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
+    return this.coerce(this.lhs.checktype(checkstate),
+                       this.rhs.checktype(checkstate));
+  }
+
+  coerce(lhs:WhileType, rhs:WhileType): WhileType {
+    if(lhs instanceof WhileBool && rhs instanceof WhileBool){
+      return new WhileBool();
+    }
     return undefined;
   }
 }

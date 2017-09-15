@@ -2,7 +2,7 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
-
+import { WhileInt, WhileDouble } from '../typecheck/TYPECHECK';
 /**
   Representación de restas.
 */
@@ -29,6 +29,19 @@ export class Substraction implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
+    return this.coerce(this.lhs.checktype(checkstate),
+                       this.rhs.checktype(checkstate));
+  }
+
+  coerce(lhs:WhileType, rhs:WhileType){
+    if(lhs instanceof WhileInt){
+      if(rhs instanceof WhileInt){ return new WhileInt(); }
+      if(rhs instanceof WhileDouble){ return new WhileDouble(); }
+    }
+    if(rhs instanceof WhileInt){
+      if(lhs instanceof WhileInt){ return new WhileInt(); }
+      if(lhs instanceof WhileDouble){ return new WhileDouble(); }
+    }
     return undefined;
   }
 }

@@ -3,6 +3,7 @@ import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
 import { Integer, Double, TruthValue } from './AST';
+import { WhileInt, WhileDouble, WhileBool } from '../typecheck/TYPECHECK';
 
 /**
   Representación de las asignaciones de valores a variables.
@@ -31,11 +32,15 @@ export class Assignment implements Stmt {
 
   checktype(checkstate: CheckState): CheckState {
     var type: WhileType = checkstate.get(this.id);
-    if(type == "int" && this.exp instanceof Integer ||
-       type == "double" && this.exp instanceof Double ||
-       type == "bool" && this.exp instanceof TruthValue){
-        checkstate.set(this.id,type);
+    if(type != undefined){
+      if(type instanceof WhileInt && this.exp instanceof Integer ||
+         type instanceof WhileDouble && this.exp instanceof Double ||
+         type instanceof WhileBool && this.exp instanceof TruthValue){
+          checkstate.set(this.id,type);
+        }
       }
+    else { //tirar error
+    }
     return checkstate;
   }
 }

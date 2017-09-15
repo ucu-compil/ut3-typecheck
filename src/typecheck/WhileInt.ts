@@ -7,13 +7,8 @@ export class WhileInt extends WhileType{
 
   constructor(){
     super();
-    this.type = "int";
-  }
-
-  getInstance(){
     if(this.instance == null){
-      this.instance = WhileInt.constructor();
+      this.type = "int";
     }
-    return this.instance;
   }
 }

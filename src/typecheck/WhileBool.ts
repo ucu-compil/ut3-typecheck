@@ -7,13 +7,8 @@ export class WhileBool extends WhileType{
 
   constructor(){
     super();
-    this.type = "bool";
-  }
-
-  getInstance(){
     if(this.instance == null){
-      this.instance = WhileBool.constructor();
+    this.type = "bool";
     }
-    return this.instance;
   }
 }

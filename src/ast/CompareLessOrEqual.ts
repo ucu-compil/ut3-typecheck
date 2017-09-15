@@ -2,6 +2,7 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { WhileInt, WhileDouble, WhileBool } from '../typecheck/TYPECHECK';
 
 /**
   Representación de las comparaciones por menor o igual.
@@ -29,6 +30,19 @@ export class CompareLessOrEqual implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
+    return this.coerce(this.lhs.checktype(checkstate),
+                       this.rhs.checktype(checkstate));
+  }
+
+  coerce(lhs:WhileType, rhs:WhileType): WhileType{
+    if(lhs instanceof WhileInt){
+      if(rhs instanceof WhileDouble) { return new WhileBool();}
+      if(rhs instanceof WhileInt) { return new WhileBool(); }
+    }
+    if(rhs instanceof WhileInt){
+      if(lhs instanceof WhileDouble) { return new WhileBool();}
+      if(lhs instanceof WhileInt) { return new WhileBool(); }
+    }
     return undefined;
   }
 }

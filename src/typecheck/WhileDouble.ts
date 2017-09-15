@@ -7,13 +7,8 @@ export class WhileDouble extends WhileType{
 
   constructor(){
     super();
-    this.type = "double";
-  }
-
-  getInstance(){
     if(this.instance == null){
-      this.instance = WhileDouble.constructor();
+      this.type = "double";
     }
-    return this.instance;
   }
 }

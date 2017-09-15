@@ -2,6 +2,7 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { WhileDouble } from '../typecheck/TYPECHECK';
 
 /**
   Representación de constantes numéricas o numerales.
@@ -27,6 +28,6 @@ export class Double implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return undefined;
+    return new WhileDouble();
   }
 }

@@ -2,6 +2,7 @@ import { Exp, Stmt } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { WhileBool } from '../typecheck/TYPECHECK';
 
 /**
   Representación de las sentencias condicionales.
@@ -28,6 +29,9 @@ export class IfThen implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
+    if(this.cond.checktype instanceof WhileBool){
+
+    }
     return undefined;
   }
 }
