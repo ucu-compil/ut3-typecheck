@@ -89,7 +89,8 @@ neg ->
 
 value ->
     "(" exp ")"             {% ([, exp, ]) => (exp) %}
-  | number                  {% ([num]) => (new Numeral(num)) %}
+  | number                  {% ([num]) => (new Numeral(num,NumericalType.getInstance())) %}
+  | numberInt               {% ([num]) => (new Numeral(num,IntegerType.getInstance())) %}
   | "true"                  {% () => (new TruthValue(true)) %}
   | "false"                 {% () => (new TruthValue(false)) %}
   | identifier              {% ([id]) => (new Variable(id)) %}
@@ -101,9 +102,10 @@ identifier ->
     %identifier             {% ([id]) => (id.value) %}
 
 number ->
+  %floatvalue               {% ([id]) => (id.value) %}
+numberInt ->
     %integer                {% ([id]) => (id.value) %}
   | %hex                    {% ([id]) => (id.value) %}
-  | %floatvalue             {% ([id]) => (id.value) %}
 
 type ->
     "boolean"                 {% ([id]) => (BooleanType.getInstance()) %}

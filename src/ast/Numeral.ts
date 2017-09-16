@@ -11,9 +11,11 @@ import { NumericalType } from '../typecheck/NumericalType';
 export class Numeral implements Exp {
 
   value: number;
+  type: WhileType;
 
-  constructor(value: number) {
+  constructor(value: number, type: WhileType) {
     this.value = value;
+    this.type = type;
   }
 
 //  toString(): string {
@@ -29,13 +31,6 @@ export class Numeral implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    if(this.isInteger()){
-      return IntegerType.getInstance();
-    }else{
-      return NumericalType.getInstance();
-    }
-  }
-  isInteger(): boolean{
-     return this.value % 1 == 0;
+    return this.type;
   }
 }
