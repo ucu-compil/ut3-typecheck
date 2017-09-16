@@ -15,6 +15,7 @@ import {
   Disjunction,
   IfThenElse,
   IfThen,
+  Integer,
   Multiplication,
   Division,
   Negation,
@@ -89,8 +90,8 @@ neg ->
 
 value ->
     "(" exp ")"             {% ([, exp, ]) => (exp) %}
-  | number                  {% ([num]) => (new Numeral(num,NumericalType.getInstance())) %}
-  | numberInt               {% ([num]) => (new Numeral(num,IntegerType.getInstance())) %}
+  | number                  {% ([num]) => (new Numeral(num)) %}
+  | numberInt               {% ([num]) => (new Integer(num)) %}
   | "true"                  {% () => (new TruthValue(true)) %}
   | "false"                 {% () => (new TruthValue(false)) %}
   | identifier              {% ([id]) => (new Variable(id)) %}
