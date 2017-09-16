@@ -17,16 +17,11 @@ export class IntegerType extends WhileType {
     }
 
     public coerce(targetType: WhileType): boolean {
-        return this.isInteger(targetType) || this.isNumerical(targetType);
+        return super.coerce(targetType) || this.isNumerical(targetType);
     }
-
 
     protected isNumerical(type:WhileType):boolean{
         return type instanceof NumericalType;
-    }
-
-    protected isInteger(type:WhileType):boolean{
-        return type instanceof IntegerType;
     }
 
 }

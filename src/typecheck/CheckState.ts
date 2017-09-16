@@ -21,6 +21,7 @@ export class CheckState {
   set(id: string, type: WhileType) {
     this.vars.set(id, type);
   }
+  
   clone(): CheckState {
     var state = new CheckState();
     this.vars.forEach((value, identifier) => {

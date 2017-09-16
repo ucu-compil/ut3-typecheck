@@ -36,7 +36,7 @@ export class Assignment implements Stmt {
     else{
       var type = checkstate.vars.get(this.id);
       var expType =this.exp.checktype(checkstate);
-      if (! type.isSameType(expType))
+      if (! type.coerce(expType))
         checkstate.errors.push("Error de tipos: [" + type + "] distinto [" + expType + "]" );
       }
     return checkstate;

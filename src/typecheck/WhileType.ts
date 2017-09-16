@@ -5,9 +5,7 @@ export abstract class WhileType {
         return `${this.constructor.name}`;
     }
 
-    public isSameType(type:WhileType):boolean{
-       return type === this;
+    public coerce(targetType:WhileType):boolean{
+        return targetType === this;
     }
-
-    public abstract coerce(targetType:WhileType):boolean;
  }

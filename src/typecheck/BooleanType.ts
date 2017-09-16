@@ -15,12 +15,4 @@ export class BooleanType extends WhileType {
         return BooleanType.instance;
     }
 
-    public coerce(targetType: WhileType): boolean {
-        return this.isBoolean(targetType);
-    }
-
-    protected isBoolean(type:WhileType):boolean{
-        return type instanceof BooleanType;
-    }
-
 }

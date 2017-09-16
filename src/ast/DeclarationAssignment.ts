@@ -36,7 +36,7 @@ export class DeclarationAssignment implements Stmt {
     }else{
       checkstate.vars.set(this.id, this.type);
     }
-    if (! expType.isSameType(this.type)){
+    if (! expType.coerce(this.type)){
       checkstate.errors.push("Error de tipos: [" + this.type + "] distinto [" + expType.toString() + "]" );
     }
     return checkstate;

@@ -15,12 +15,4 @@ export class NumericalType extends WhileType {
         return NumericalType.instance;
     }
 
-    public coerce(targetType: WhileType): boolean {
-        return this.isNumerical(targetType);
-    }
-
-    protected isNumerical(type:WhileType):boolean{
-        return type instanceof NumericalType;
-    }
-
 }
