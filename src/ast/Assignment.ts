@@ -7,6 +7,10 @@ import { WhileType } from '../typecheck/WhileType';
 /**
   Representación de las asignaciones de valores a variables.
 */
+
+
+///poner la variable en la lista de varaibles definidas
+
 export class Assignment implements Stmt {
 
   id: string;

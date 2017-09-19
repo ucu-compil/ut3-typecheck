@@ -34,9 +34,11 @@ export abstract class AbstractBinaryExpression implements Exp {
   checktype(checkstate: CheckState): WhileType {
     var leftSideType = this.leftHandExpression.checktype(checkstate);
     var rightSideType = this.rightHandExpression.checktype(checkstate);
-    if (!this.getCoercibleTypes(leftSideType) || !this.getCoercibleTypes(rightSideType)) {
+    
+    if (!this.isCoercible(leftSideType,rightSideType)) {
       this.reportError(checkstate, leftSideType, rightSideType);
     }
+    // poner if para chequear que esta inicializada sino esta tirar error
     return this.returnType(leftSideType, rightSideType);
   }
 
@@ -58,6 +60,5 @@ export abstract class AbstractBinaryExpression implements Exp {
 
   protected abstract returnType(leftSideType: WhileType, rightSideType: WhileType): WhileType;
 
-  protected abstract getCoercibleTypes(type: WhileType): boolean;
-
+  protected abstract isCoercible(leftSideType: WhileType, rightSideType: WhileType): boolean;
 }

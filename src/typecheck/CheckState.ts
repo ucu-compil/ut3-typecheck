@@ -7,6 +7,7 @@ export class CheckState {
 
   constructor() {
     this.errors = [];
+    //crear lista de variables inicializadas
     this.vars = new Map<string, WhileType>();
   }
 

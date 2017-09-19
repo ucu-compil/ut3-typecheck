@@ -1,3 +1,4 @@
+import { UndefinedType } from '../typecheck/UndefinedType';
 import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
@@ -31,7 +32,7 @@ export class Variable implements Exp {
       return type;
     }else{
       checkstate.errors.push("Variable no declarada");
-      return undefined //Idk que deberia devolver sino esta declarada
+      return UndefinedType.getInstance();
     }
   }
 }
