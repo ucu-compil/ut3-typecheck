@@ -28,12 +28,12 @@ import {
   DeclarationAssignment,
   WhileDo
 } from '../ast/AST';
-import { BooleanType } from '../typecheck/BooleanType';
-import { IntegerType } from '../typecheck/IntegerType';
-import { NumericalType } from '../typecheck/NumericalType';
+import { BooleanType } from '../typechecker/types/BooleanType';
+import { IntegerType } from '../typechecker/types/IntegerType';
+import { NumericalType } from '../typechecker/types/NumericalType';
 
-import { tokens } from './Tokens';
-import { MyLexer } from './Lexer';
+import { tokens } from '../lexer/Tokens';
+import { MyLexer } from '../lexer/Lexer';
 
 
 const lexer = new MyLexer(tokens);
