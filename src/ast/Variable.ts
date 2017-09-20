@@ -29,9 +29,13 @@ export class Variable implements Exp {
   checktype(checkstate: CheckState): WhileType {
     var type = checkstate.get(this.id);
     if(type != undefined){
+      if(! (checkstate.assignedVars.indexOf(this.id) > -1)){
+        checkstate.errors.push("Variable " + this.id + " no inicializada");
+        return UndefinedType.getInstance();
+      }
       return type;
     }else{
-      checkstate.errors.push("Variable no declarada");
+      checkstate.errors.push("Variable " + this.id +" no declarada");
       return UndefinedType.getInstance();
     }
   }

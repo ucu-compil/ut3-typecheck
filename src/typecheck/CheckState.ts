@@ -3,11 +3,12 @@ import { WhileType } from './WhileType';
 export class CheckState {
 
   vars: Map<string, WhileType>;
-  errors:String[];
+  errors: String [];
+  assignedVars: String [];
 
   constructor() {
     this.errors = [];
-    //crear lista de variables inicializadas
+    this.assignedVars = []
     this.vars = new Map<string, WhileType>();
   }
 
@@ -22,7 +23,7 @@ export class CheckState {
   set(id: string, type: WhileType) {
     this.vars.set(id, type);
   }
-  
+
   clone(): CheckState {
     var state = new CheckState();
     this.vars.forEach((value, identifier) => {
