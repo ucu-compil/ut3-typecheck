@@ -38,7 +38,6 @@ export abstract class AbstractBinaryExpression implements Exp {
     if (!this.isCoercible(leftSideType,rightSideType)) {
       this.reportError(checkstate, leftSideType, rightSideType);
     }
-
     return this.returnType(leftSideType, rightSideType);
   }
 

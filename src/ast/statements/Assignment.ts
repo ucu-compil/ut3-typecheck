@@ -44,9 +44,6 @@ export class Assignment implements Stmt {
   }
 
   isDefined(checkstate: CheckState): Boolean {
-    if (checkstate.vars.get(this.id) == undefined){
-      return false;
-    }
-    return true;
+      return !checkstate.vars.get(this.id) === undefined;
   }
 }
