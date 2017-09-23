@@ -15,6 +15,7 @@ import {
   Disjunction,
   IfThenElse,
   IfThen,
+  Integer,
   Multiplication,
   Division,
   Negation,
@@ -23,11 +24,17 @@ import {
   Substraction,
   TruthValue,
   Variable,
+  Declaration,
+  DeclarationAssignment,
   WhileDo
 } from '../ast/AST';
+import { BooleanType } from '../typechecker/types/BooleanType';
+import { IntegerType } from '../typechecker/types/IntegerType';
+import { NumericalType } from '../typechecker/types/NumericalType';
 
-import { tokens } from './Tokens';
-import { MyLexer } from './Lexer';
+import { tokens } from '../lexer/Tokens';
+import { MyLexer } from '../lexer/Lexer';
+
 
 const lexer = new MyLexer(tokens);
 
@@ -43,7 +50,9 @@ stmt ->
   | "if" exp "then" stmt                  {% ([, cond, , thenBody]) => (new IfThen(cond, thenBody)) %}
 
 stmtelse ->
-    identifier "=" exp ";"                {% ([id, , exp, ]) => (new Assignment(id, exp)) %}
+  identifier "=" exp ";"                  {% ([id, , exp, ]) => (new Assignment(id, exp)) %}
+  | type identifier "=" exp ";"           {% ([type, id, , exp, ]) => (new DeclarationAssignment(type, id, exp)) %}
+  | type identifier ";"                   {% ([type, id, ]) => (new Declaration(type, id)) %}
   | "{" stmt:* "}"                        {% ([, statements, ]) => (new Sequence(statements)) %}
   | "while" exp "do" stmt                 {% ([, cond, , body]) => (new WhileDo(cond, body)) %}
   | "if" exp "then" stmtelse "else" stmt  {% ([, cond, , thenBody, , elseBody]) => (new IfThenElse(cond, thenBody, elseBody)) %}
@@ -63,7 +72,7 @@ comp ->
   | comp "<" addsub         {% ([lhs, , rhs]) => (new CompareLess(lhs, rhs)) %}
   | comp ">=" addsub        {% ([lhs, , rhs]) => (new CompareGreatOrEqual(lhs, rhs)) %}
   | comp ">" addsub         {% ([lhs, , rhs]) => (new CompareGreat(lhs, rhs)) %}
-  | addsub
+  | addsub                  {% id %}
 
 addsub ->
     addsub "+" muldiv       {% ([lhs, , rhs]) => (new Addition(lhs, rhs)) %}
@@ -82,6 +91,7 @@ neg ->
 value ->
     "(" exp ")"             {% ([, exp, ]) => (exp) %}
   | number                  {% ([num]) => (new Numeral(num)) %}
+  | numberInt               {% ([num]) => (new Integer(num)) %}
   | "true"                  {% () => (new TruthValue(true)) %}
   | "false"                 {% () => (new TruthValue(false)) %}
   | identifier              {% ([id]) => (new Variable(id)) %}
@@ -93,6 +103,12 @@ identifier ->
     %identifier             {% ([id]) => (id.value) %}
 
 number ->
+  %floatvalue               {% ([id]) => (id.value) %}
+numberInt ->
     %integer                {% ([id]) => (id.value) %}
   | %hex                    {% ([id]) => (id.value) %}
-  | %float                  {% ([id]) => (id.value) %}
+
+type ->
+    "boolean"                 {% ([id]) => (BooleanType.getInstance()) %}
+  | "int"                     {% ([id]) => (IntegerType.getInstance()) %}
+  | "float"                   {% ([id]) => (NumericalType.getInstance())   %}

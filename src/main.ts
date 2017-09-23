@@ -2,15 +2,15 @@ import * as readlineSync from "readline-sync";
 
 import { Parser } from "nearley";
 
-import { tokens } from "./parser/Tokens";
-import { MyLexer } from "./parser/Lexer"
+import { tokens } from "./lexer/Tokens";
+import { MyLexer } from "./lexer/Lexer"
 import { ParserRules, ParserStart } from "./parser/Grammar";
 
 import { ASTNode, Stmt } from './ast/AST';
 
 import { State } from './interpreter/State';
-import { CheckState } from './typecheck/CheckState';
-import { WhileType } from './typecheck/WhileType';
+import { CheckState } from './typechecker/CheckState';
+import { WhileType } from './typechecker/types/WhileType';
 
 
 console.log("While :: REPL");
@@ -38,6 +38,10 @@ while (true) {
         const node = nodes[0];
         state = node.checktype(state);
         console.log(`\n${state.toString()}`);
+        for(var i =0;i<state.errors.length;i++){
+          console.log(state.errors[i]);
+        }
+        state.errors = [];
         break;
       }
       default: {

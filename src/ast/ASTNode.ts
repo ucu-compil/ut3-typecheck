@@ -1,6 +1,6 @@
 import { State } from '../interpreter/State';
-import { CheckState } from '../typecheck/CheckState';
-import { WhileType } from '../typecheck/WhileType';
+import { CheckState } from '../typechecker/CheckState';
+import { WhileType } from '../typechecker/types/WhileType';
 
 export interface ASTNode {
   toString(): string;
