@@ -32,9 +32,9 @@ export class DAssignment implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
-    if(this.type == "int" && this.exp instanceof Integer ||
-      this.type == "double" && this.exp instanceof Double ||
-      this.type == "bool" && this.exp instanceof TruthValue){
+    if(this.type.type === "int" && this.exp instanceof Integer ||
+      this.type.type === "double" && this.exp instanceof Double ||
+      this.type.type === "bool" && this.exp instanceof TruthValue){
         checkstate.set(this.id,this.type);
       }
     return checkstate;

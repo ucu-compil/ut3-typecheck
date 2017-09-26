@@ -2,6 +2,7 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { WhileInt, WhileDouble, WhileBool } from '../typecheck/TYPECHECK';
 
 /**
   Representación de las negaciones de expresiones booleanas.
@@ -27,6 +28,9 @@ export class Negation implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return undefined;
+    if(!(this.exp.checktype(checkstate).toString() === new WhileBool().type)){
+      return undefined;
+    }
+    return new WhileBool();
   }
 }
