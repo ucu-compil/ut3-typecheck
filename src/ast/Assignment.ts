@@ -32,14 +32,13 @@ export class Assignment implements Stmt {
 
   checktype(checkstate: CheckState): CheckState {
     var type: WhileType = checkstate.get(this.id);
-    if(type != undefined){
-      if(type instanceof WhileInt && this.exp instanceof Integer ||
-         type instanceof WhileDouble && this.exp instanceof Double ||
-         type instanceof WhileBool && this.exp instanceof TruthValue){
-          checkstate.set(this.id,type);
-        }
+    if(type instanceof WhileInt && this.exp instanceof Integer ||
+        type instanceof WhileDouble && this.exp instanceof Double ||
+        type instanceof WhileBool && this.exp instanceof TruthValue){
+        checkstate.set(this.id,type);
       }
     else { //tirar error
+
     }
     return checkstate;
   }
