@@ -2,6 +2,8 @@ import { Exp, Stmt } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
+import { Integer, Double, TruthValue } from './AST';
+import { WhileInt, WhileDouble, WhileBool } from '../typecheck/TYPECHECK';
 
 /**
   Representación de las asignaciones de valores a variables.
@@ -29,6 +31,15 @@ export class Assignment implements Stmt {
   }
 
   checktype(checkstate: CheckState): CheckState {
-    return undefined;
+    let type: WhileType = checkstate.get(this.id);
+    if(type instanceof WhileInt && this.exp instanceof Integer ||
+        type instanceof WhileDouble && this.exp instanceof Double ||
+        type instanceof WhileBool && this.exp instanceof TruthValue){
+        checkstate.set(this.id,type);
+      }
+    else {
+      checkstate.errorStack.push(`Un valor del tipo ${type} no es asignable a una variable del tipo ${typeof(this.exp)}`);
+    }
+    return checkstate;
   }
 }

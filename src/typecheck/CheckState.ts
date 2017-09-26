@@ -3,9 +3,11 @@ import { WhileType } from './WhileType';
 export class CheckState {
 
   vars: Map<string, WhileType>;
+  errorStack: String[];
 
   constructor() {
     this.vars = new Map<string, WhileType>();
+    this.errorStack = [];
   }
 
   toString(): string {

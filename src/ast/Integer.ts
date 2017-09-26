@@ -2,25 +2,25 @@ import { Exp } from './ASTNode';
 import { State } from '../interpreter/State';
 import { CheckState } from '../typecheck/CheckState';
 import { WhileType } from '../typecheck/WhileType';
-import { WhileBool } from '../typecheck/TYPECHECK';
+import { WhileInt } from '../typecheck/TYPECHECK';
 
 /**
-  Representación de valores de verdad (cierto o falso).
+  Representación de constantes numéricas o numerales.
 */
-export class TruthValue implements Exp {
+export class Integer implements Exp {
 
-  value: boolean;
+  value: number;
 
-  constructor(value: boolean) {
+  constructor(value: number) {
     this.value = value;
   }
 
   toString(): string {
-    return `TruthValue(${this.value})`;
+    return `Integer(${this.value})`;
   }
 
   unparse(): string {
-    return this.value ? "true" : "false";
+    return `${this.value}`;
   }
 
   evaluate(state: State): any {
@@ -28,6 +28,6 @@ export class TruthValue implements Exp {
   }
 
   checktype(checkstate: CheckState): WhileType {
-    return new WhileBool();
+    return new WhileInt();
   }
 }

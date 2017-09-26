@@ -7,14 +7,17 @@ export * from './IfThenElse';
 export * from './IfThen';
 export * from './Sequence';
 export * from './WhileDo';
+export * from './DAssignment';
+export * from './Declaration';
 
 // AExp
 export * from './Addition';
 export * from './Multiplication';
 export * from './Division';
-export * from './Numeral';
+export * from './Integer';
 export * from './Substraction';
 export * from './Variable';
+export * from './Double';
 
 // BExp
 export * from './CompareEqual';

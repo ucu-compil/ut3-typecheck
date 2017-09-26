@@ -12,19 +12,27 @@ import {
   CompareGreatOrEqual,
   CompareGreat,
   Conjunction,
+  DAssignment,
   Disjunction,
   IfThenElse,
   IfThen,
   Multiplication,
   Division,
   Negation,
-  Numeral,
   Sequence,
   Substraction,
   TruthValue,
   Variable,
-  WhileDo
+  WhileDo,
+  Integer,
+  Double
 } from '../ast/AST';
+
+import {
+  WhileInt,
+  WhileBool,
+  WhileDouble
+} from '../typecheck/TYPECHECK'
 
 import { tokens } from './Tokens';
 import { MyLexer } from './Lexer';
@@ -44,6 +52,7 @@ stmt ->
 
 stmtelse ->
     identifier "=" exp ";"                {% ([id, , exp, ]) => (new Assignment(id, exp)) %}
+  | type identifier "=" exp ";"           {% ([type, id, , exp, ]) => (new DAssignment(type, id, exp)) %}
   | "{" stmt:* "}"                        {% ([, statements, ]) => (new Sequence(statements)) %}
   | "while" exp "do" stmt                 {% ([, cond, , body]) => (new WhileDo(cond, body)) %}
   | "if" exp "then" stmtelse "else" stmt  {% ([, cond, , thenBody, , elseBody]) => (new IfThenElse(cond, thenBody, elseBody)) %}
@@ -81,18 +90,25 @@ neg ->
 
 value ->
     "(" exp ")"             {% ([, exp, ]) => (exp) %}
-  | number                  {% ([num]) => (new Numeral(num)) %}
+  | integer                 {% ([num]) => (new Integer(num)) %}
+  | double                  {% ([num]) => (new Double(num)) %}
   | "true"                  {% () => (new TruthValue(true)) %}
   | "false"                 {% () => (new TruthValue(false)) %}
   | identifier              {% ([id]) => (new Variable(id)) %}
 
+type ->
+    "int"                   {% () => (new WhileInt()) %}
+  | "double"                {% () => (new WhileDouble()) %}
+  | "bool"                  {% () => (new WhileBool()) %}
 
 # Atoms
 
 identifier ->
     %identifier             {% ([id]) => (id.value) %}
 
-number ->
+integer ->
     %integer                {% ([id]) => (id.value) %}
   | %hex                    {% ([id]) => (id.value) %}
-  | %float                  {% ([id]) => (id.value) %}
+
+float ->
+    %float                  {% ([id]) => (id.value) %}
